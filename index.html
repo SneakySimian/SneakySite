@@ -3,43 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why?</title>
+    <title>Welcome | Redirecting</title>
     <style>
-        body {
-            background: linear-gradient(135deg, #ff6a6f 0%, #fad0c4 100%);
-            font-family: 'Arial', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(to bottom right, #ff4d94, #ffffff);
+        }
+
+        .container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
-        .message-box {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        .content {
             text-align: center;
+            color: white;
+            font-size: calc(25px + 3vmin);
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 4rem;
+            border-radius: 1rem;
+            box-shadow: 0 16px 80px rgba(255, 30, 95, 0.4), 
+                        0 24px 64px rgba(255, 75, 148, 0.3);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-        h1 {
-            color: #ff6347;
-            font-size: 2.5rem;
+
+        .content h1 {
+            font-size: calc(40px + 6vmin);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        p {
-            font-size: 1.2rem;
-            color: #333333;
+
+        .content p {
+            font-size: calc(18px + 3vmin);
+            line-height: 1.5;
+            margin-top: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
-        h2 {
-            font-size: 1.75rem;
-            color: #ff6347;
+
+        .content::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            bottom: -4px;
+            left: -4px;
+            border-radius: 1rem;
+            box-shadow: 
+                inset 0 0 25px rgba(255, 75, 148, 0.3),
+                0 0 25px rgba(255, 75, 148, 0.6);
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: calc(14px + 2vmin);
+        }
+
+        .redirecting {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #363636;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: calc(24px + 2vmin);
         }
     </style>
 </head>
 <body>
-    <div class="message-box">
-        <h1>What are you doing here?</h1>
-        <p>This isn't here for you! Go play the Minecraft server! <br></p>
-        <h2>mc.sneakysimian.com</h2>
+    <div class="container">
+        <div class="content" id="splashContent">
+            <h1>What are you doing here?</h1>
+            <p>Go somewhere else!</p>
+            <div class="click-hint">Click anywhere to leave now.</div>
+        </div>
+        
+        <!-- This hidden content will be shown when we need to redirect -->
+        <div class="redirecting" style="display: none;">
+            Redirecting...
+            <script>
+                // Wait for the page to load
+                window.addEventListener('load', function() {
+                    // Start with a fade-out animation
+                    setTimeout(function() {
+                        document.getElementById('splashContent').style.opacity = '0';
+                        document.querySelector('.redirecting').style.display = 'flex';
+                        
+                        // Redirect after 2 seconds
+                        setTimeout(function() {
+                            window.location.href = "https://youtu.be/dQw4w9WgXcQ?si=t1l8GBZEEUUhdVmX";
+                        }, 2000);
+                    }, 5000); // Wait 5 seconds before starting the fade-out
+                    
+                    // Also handle click events to redirect faster on request
+                    document.getElementById('splashContent').addEventListener('click', function() {
+                        var url = this.getAttribute('data-redirect-url') || "https://youtu.be/dQw4w9WgXcQ?si=t1l8GBZEEUUhdVmX";
+                        window.location.href = url;
+                    });
+                });
+            </script>
+        </div>
     </div>
 </body>
 </html>
